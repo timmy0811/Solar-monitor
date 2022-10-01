@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Solar-Monitor</title>
+</head>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js">
+    d3
+    .csv('/data/latest.csv')
+    .then(makeChart);
+
+    function makeChart(data) {
+        var country = data.map(function(d) {return d.province;});
+        var value = data.map(function(d) {return d.cumulative_cases;});
+    }
+
+    // Bar chart
+    new Chart(document.getElementById("myCanvas"), {
+          type: 'bar',
+          data: {
+            labels: country,
+            datasets: [
+              {
+                label: "Population (millions)",
+                backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+                data: value
+              }
+            ]
+          },
+          options: {
+            legend: { display: false },
+            title: {
+              display: true,
+              text: 'Total Confirmed Cases of COVID in May'
+            }
+          }
+      });
+</script>
+
+<body>
+    <canvas id="myChart" width="400" height="400"></canvas>
+    <h1>Solar-Monitor 400Wp</h1>
+    <h3>Analytics</h3>
+    <p>Current Voltage: {{curr_vol}}</p>
+    <p>Current Amperage: {{curr_amp}}</p>
+    <p>Current Wattage: {{curr_wat}}</p>
+    <p>Effective Power: {{curr_effwat}}</p>
+
+    <h3>Statistics</h3>
+    <p>Today's peak Wattage: {{peak_wat}}'</p>
+</body>
+</html>
