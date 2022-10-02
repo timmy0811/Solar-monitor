@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="style.css">
     <meta charset="UTF-8">
     <title>Solar-Monitor</title>
 </head>
@@ -38,16 +39,71 @@
       });
 </script>
 
-<body>
-    <canvas id="myChart" width="400" height="400"></canvas>
-    <h1>Solar-Monitor 400Wp</h1>
-    <h3>Analytics</h3>
-    <p>Current Voltage: {{curr_vol}}</p>
-    <p>Current Amperage: {{curr_amp}}</p>
-    <p>Current Wattage: {{curr_wat}}</p>
-    <p>Effective Power: {{curr_effwat}}</p>
+<style>
+  body{
+    background: url("images/wallpaper1.jpg");
+  }
 
-    <h3>Statistics</h3>
-    <p>Today's peak Wattage: {{peak_wat}}'</p>
+  table{
+    width: 45vw;
+  }
+
+  th{
+    text-align: left;
+  }
+
+  
+</style>
+
+<body>
+    <h1>Solar-Monitor 400Wp</h1>
+    <div style="width: 30vw; padding-left: 20px;">
+      <table>
+        <tr>
+          <th>Analytics</th>
+          <th></th>
+        </tr>
+        <tr>
+          <td>Current Voltage:</td>
+          <td>{{curr_vol}} V</td>
+        </tr>
+        <tr>
+          <td>Current Amperage:</td>
+          <td>{{curr_amp}} A</td>
+        </tr>
+        <tr>
+          <td>Current Wattage:</td>
+          <td>{{curr_wat}} W</td>
+        </tr>
+        <tr>
+          <td>Effective Power:</td>
+          <td>{{curr_effwat}} W</td>
+        </tr>
+      </table>
+  
+      <table>
+        <tr>
+          <th>Statistics</th>
+        </tr>
+        <tr>
+          <td>Today's peak Wattage:</td>
+          <td>{{pk_wat}} W</td>
+        </tr>
+        <tr>
+          <td>Harvested today:</td>
+          <td>{{tod_wat}} kWh</td>
+        </tr>
+        <tr>
+          <td>Harvested all-time:</td>
+          <td>{{total_wat}} kWh</td>
+        </tr>
+        <tr>
+          <td>Price/kWh:</td>
+          <td>{{price_wat}} €</td>
+        </tr>
+      </table>
+    </div>
+    
+    <canvas id="myChart" width="400" height="400"></canvas>
 </body>
 </html>
