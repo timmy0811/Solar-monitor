@@ -1,6 +1,7 @@
 # Run in production: flask --app --host=0.0.0.0 main run
 # Run in debugging: flask --app main run
 
+from asyncore import read
 from flask import Flask, render_template, redirect, url_for
 import threading
 import time, csv
@@ -34,7 +35,7 @@ def scrape_Hardware():
 
         wat = dropdown_voltage * module_voltage
 
-        # Writing to latest.csv
+        # Writing data
         data = [datetime.now().strftime("%H:%M:%S"), module_voltage, dropdown_voltage, wat, wat * 0.7]
         with open('data/latest.csv', 'a+', newline='') as file:
             writer = csv.writer(file)
@@ -54,19 +55,42 @@ def scrape_Hardware():
                 writer.writerow(data)
                 file.close()
 
+        # Read data
+        wat_log = {}
+        with open('data/latest.csv', 'r') as file:
+            reader = csv.DictReader(file)
+            line = 0
+            for row in reader:
+                wat_log[line] = row
+                line += 1
+        
+        # Setup diagram dictionary
+        chart_dic = {}
+        for i in range(24):
+            if(i < 24 - len(wat_log)):
+                chart_dic[i] = 0
+            elif(len(wat_log) > 0):
+                ind = i - (24 - len(wat_log))
+                chart_dic[i] = list(wat_log[0])[3]
+
         # Calculate stats
         global curr_vol, curr_amp
         curr_vol = module_voltage
         curr_amp = dropdown_voltage
+        counter = 0
 
         # Rest for next scrape
-        time.sleep(5)
+        time.sleep(refreshing_interval)
         counter += 1
 
         # Reset daily sum by midnight
         if(datetime.now().strftime("%H:%M") == "00:00"):
             wat_today = 0
             wat_h_old = 0
+
+            # Clear latest.csv
+            f = open('data/latest.csv', "w+")
+            f.close()
 
 if __name__ == "__main__":
     # Hardware parameter
@@ -79,7 +103,7 @@ if __name__ == "__main__":
     total_wat = 0
     tod_wat = 0
 
-    refreshing_interval = 5
+    refreshing_interval = 2
     wat_today = 0
     wat_h_old = 0
 
