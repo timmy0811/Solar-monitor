@@ -107,15 +107,16 @@ if __name__ == "__main__":
     wat_today = 0
     wat_h_old = 0
 
-    #thread_frontend = threading.Thread(target=app.run, args=(), daemon=False)
+    thread_frontend = threading.Thread(target=app.run, args=(), daemon=False)
     thread_scraping = threading.Thread(target=scrape_Hardware, args=(), daemon=False)
 
     try:
+        app.run(debug=True)
         #thread_frontend.start()
-        thread_scraping.start()
+        #thread_scraping.start()
 
         #thread_frontend.join()
-        thread_scraping.join()
+        #thread_scraping.join()
     except:
         print("Interrupted.")
     

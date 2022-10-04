@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="style.css">
-    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"><meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dist/charts.min.css') }}">
     <title>Solar-Monitor</title>
 </head>
 
@@ -38,22 +38,6 @@
           }
       });
 </script>
-
-<style>
-  body{
-    background: url("images/wallpaper1.jpg");
-  }
-
-  table{
-    width: 45vw;
-  }
-
-  th{
-    text-align: left;
-  }
-
-  
-</style>
 
 <body>
     <h1>Solar-Monitor 400Wp</h1>
@@ -103,7 +87,41 @@
         </tr>
       </table>
     </div>
+    <span></span>
+    <table class="charts-css line show-heading show-labels show-data-axes show-4-secondary-axes show-primary-axis" id="my-chart">
+      <caption>Generation thoughout the day</caption>
+
+      <tbody>
+        <tr>
+          <th scope="row">16h</th>
+          <td style="--start: 0.0; --size: 0.4"> <span class="data"> $ 40K </span> </td>
+        </tr>
+        <tr>
+          <th scope="row">15h</th>
+          <td style="--start: 0.4; --size: 0.2"> <span class="data"> $ 20K </span> </td>
+        </tr>
+        <tr>
+          <th scope="row">14h</th>
+          <td style="--start: 0.2; --size: 0.6"> <span class="data"> $ 60K </span> </td>
+        </tr>
+        <tr>
+          <th scope="row">13h</th>
+          <td style="--start: 0.6; --size: 0.4"> <span class="data"> $ 40K </span> </td>
+        </tr>
+        <tr>
+          <th scope="row">12h</th>
+          <td style="--start: 0.4; --size: 0.8"> <span class="data"> $ 80K </span> </td>
+        </tr>
+        <tr>
+          <th scope="row">11h</th>
+          <td style="--start: 0.8; --size: 0.6"> <span class="data"> $ 60K </span> </td>
+        </tr>
+        <tr>
+          <th scope="row">10h</th>
+          <td style="--start: 0.6; --size: 1.0"> <span class="data"> $ 100K </span> </td>
+        </tr>
+      </tbody>
     
-    <canvas id="myChart" width="400" height="400"></canvas>
-</body>
+    </table>
+  </body>
 </html>
