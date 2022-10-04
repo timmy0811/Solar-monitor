@@ -19,7 +19,10 @@ def index():
 def monitor():
     curr_wat = curr_vol * curr_amp
     curr_effwat = curr_wat * 0.7
-    return render_template("monitor.html", curr_amp=curr_amp, curr_vol=curr_vol, curr_wat=curr_wat, curr_effwat= curr_effwat, pk_wat=pk_wat, price_wat=price_wat, total_wat=total_wat, tod_wat=tod_wat)
+    return render_template("monitor.html", 
+        curr_amp=curr_amp, curr_vol=curr_vol, curr_wat=curr_wat, curr_effwat= curr_effwat, 
+        pk_wat=pk_wat, price_wat=price_wat, total_wat=total_wat, tod_wat=tod_wat,
+        lit_wat=lit_wat)
 
 def scrape_Hardware():
     counter = 0
@@ -68,10 +71,10 @@ def scrape_Hardware():
         chart_dic = {}
         for i in range(24):
             if(i < 24 - len(wat_log)):
-                chart_dic[i] = 0
+                chart_dic.append(0)
             elif(len(wat_log) > 0):
                 ind = i - (24 - len(wat_log))
-                chart_dic[i] = list(wat_log[0])[3]
+                chart_dic.append(list(wat_log[ind])[3]) 
 
         # Calculate stats
         global curr_vol, curr_amp
@@ -98,6 +101,7 @@ if __name__ == "__main__":
     curr_amp = 0
     
     # Including values
+    lit_wat = 350
     pk_wat = 0
     price_wat = 0
     total_wat = 0
@@ -109,14 +113,16 @@ if __name__ == "__main__":
 
     thread_frontend = threading.Thread(target=app.run, args=(), daemon=False)
     thread_scraping = threading.Thread(target=scrape_Hardware, args=(), daemon=False)
+    #scrape_Hardware()
+    app.run(debug=True)
 
     try:
-        app.run(debug=True)
+        #app.run(debug=True)
         #thread_frontend.start()
-        #thread_scraping.start()
+        thread_scraping.start()
 
         #thread_frontend.join()
-        #thread_scraping.join()
+        thread_scraping.join()
     except:
         print("Interrupted.")
     
