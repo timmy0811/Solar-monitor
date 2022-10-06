@@ -22,7 +22,7 @@ def monitor():
     return render_template("monitor.html", 
         curr_amp=curr_amp, curr_vol=curr_vol, curr_wat=curr_wat, curr_effwat= curr_effwat, 
         pk_wat=pk_wat, price_wat=price_wat, total_wat=total_wat, tod_wat=tod_wat,
-        lit_wat=lit_wat)
+        lit_wat=lit_wat, chart_dic=chart_dic)
 
 def scrape_Hardware():
     counter = 0
@@ -68,7 +68,8 @@ def scrape_Hardware():
                 line += 1
         
         # Setup diagram dictionary
-        chart_dic = {}
+        global chart_dic
+        chart_dic.clear()
         for i in range(24):
             if(i < 24 - len(wat_log)):
                 chart_dic.append(0)
@@ -95,6 +96,12 @@ def scrape_Hardware():
             f = open('data/latest.csv', "w+")
             f.close()
 
+def log(applicationString):
+    with open('data/log', 'a', newline='') as log:
+        datestring = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
+        log.write(f"[{datestring}]  {applicationString}\n")
+        log.close()
+
 if __name__ == "__main__":
     # Hardware parameter
     curr_vol = 0
@@ -110,19 +117,26 @@ if __name__ == "__main__":
     refreshing_interval = 2
     wat_today = 0
     wat_h_old = 0
+    chart_dic = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+
 
     thread_frontend = threading.Thread(target=app.run, args=(), daemon=False)
     thread_scraping = threading.Thread(target=scrape_Hardware, args=(), daemon=False)
-    #scrape_Hardware()
-    app.run(debug=True)
 
-    try:
+    log("Starting application.")
+    #scrape_Hardware()
+    #app.run(debug=True)
+
+    #try:
         #app.run(debug=True)
         #thread_frontend.start()
-        thread_scraping.start()
+        #thread_scraping.start()
 
         #thread_frontend.join()
-        thread_scraping.join()
-    except:
-        print("Interrupted.")
+        #thread_scraping.join()
+    #except:
+        #print("Interrupted.")
+
+    log("Closing application.")
+
     
