@@ -6,39 +6,6 @@
     <title>Solar-Monitor</title>
 </head>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js">
-    d3
-    .csv('/data/latest.csv')
-    .then(makeChart);
-
-    function makeChart(data) {
-        var country = data.map(function(d) {return d.province;});
-        var value = data.map(function(d) {return d.cumulative_cases;});
-    }
-
-    // Bar chart
-    new Chart(document.getElementById("myCanvas"), {
-          type: 'bar',
-          data: {
-            labels: country,
-            datasets: [
-              {
-                label: "Population (millions)",
-                backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
-                data: value
-              }
-            ]
-          },
-          options: {
-            legend: { display: false },
-            title: {
-              display: true,
-              text: 'Total Confirmed Cases of COVID in May'
-            }
-          }
-      });
-</script>
-
 <body>
     <h1>Solar-Monitor 400Wp</h1>
     <div style="width: 30vw; padding-left: 20px;">
@@ -49,19 +16,19 @@
         </tr>
         <tr>
           <td>Current Voltage:</td>
-          <td>{{curr_vol}} V</td>
+          <td>{{"%.3f" % curr_vol}} V</td>
         </tr>
         <tr>
           <td>Current Amperage:</td>
-          <td>{{curr_amp}} A</td>
+          <td>{{"%.3f" % curr_amp}} A</td>
         </tr>
         <tr>
           <td>Current Wattage:</td>
-          <td>{{curr_wat}} W</td>
+          <td>{{"%.2f" %curr_wat}} W</td>
         </tr>
         <tr>
           <td>Effective Power:</td>
-          <td>{{curr_effwat}} W</td>
+          <td>{{"%.2f" % curr_effwat}} W</td>
         </tr>
       </table>
   
@@ -71,15 +38,15 @@
         </tr>
         <tr>
           <td>Today's peak Wattage:</td>
-          <td>{{pk_wat}} W</td>
+          <td>{{"%.1f" % pk_wat}} W</td>
         </tr>
         <tr>
           <td>Harvested today:</td>
-          <td>{{tod_wat}} kWh</td>
+          <td>{{"%.5f" % tod_wat}} kWh</td>
         </tr>
         <tr>
           <td>Harvested all-time:</td>
-          <td>{{total_wat}} kWh</td>
+          <td>{{"%.1f" % total_wat}} kWh</td>
         </tr>
         <tr>
           <td>Price/kWh:</td>
@@ -88,104 +55,104 @@
       </table>
     </div>
     <table class="charts-css line show-heading show-labels show-data-axes show-4-secondary-axes show-primary-axis" id="my-chart">
-      <caption>Generation thoughout the day</caption>
+      <caption>Generation throughout the day in Watts</caption>
 
       <tbody>
         <tr>
-          <th scope="row">23h</th>
-          <td style="--start: {{(1 / lit_wat) * chart_dic[0]}}; --size: {{(1 / lit_wat) * chart_dic[0]}}"> <span class="data"> {{(1 / lit_wat) * chart_dic[0]}} W </span> </td>
+          <th scope="row">23h</th>                                                                                                       
+          <td style="--start: {{(1 / lit_wat) * chart_dic[0]}}; --size: {{(1 / lit_wat) * chart_dic[0]}}"> <span class="data"> {{"%.1f" % chart_dic[0]}}</span> </td>
         </tr>
         <tr>
           <th scope="row">22h</th>
-          <td style="--start: {{(1 / lit_wat) * chart_dic[0]}}; --size: {{(1 / lit_wat) * chart_dic[1]}}"> <span class="data"> {{(1 / lit_wat) * chart_dic[1]}} W </span> </td>
+          <td style="--start: {{(1 / lit_wat) * chart_dic[0]}}; --size: {{(1 / lit_wat) * chart_dic[1]}}"> <span class="data"> {{"%.1f" % chart_dic[1]}}</span> </td>
         </tr>
         <tr>
           <th scope="row">21h</th>
-          <td style="--start: {{(1 / lit_wat) * chart_dic[1]}}; --size: {{(1 / lit_wat) * chart_dic[2]}}"> <span class="data"> {{(1 / lit_wat) * chart_dic[2]}} W </span> </td>
+          <td style="--start: {{(1 / lit_wat) * chart_dic[1]}}; --size: {{(1 / lit_wat) * chart_dic[2]}}"> <span class="data"> {{"%.1f" % chart_dic[2]}}</span> </td>
         </tr>
         <tr>
           <th scope="row">20h</th>
-          <td style="--start: {{(1 / lit_wat) * chart_dic[2]}}; --size: {{(1 / lit_wat) * chart_dic[3]}}"> <span class="data"> {{(1 / lit_wat) * chart_dic[3]}} W </span> </td>
+          <td style="--start: {{(1 / lit_wat) * chart_dic[2]}}; --size: {{(1 / lit_wat) * chart_dic[3]}}"> <span class="data"> {{"%.1f" % chart_dic[3]}}</span> </td>
         </tr>
         <tr>
           <th scope="row">19h</th>
-          <td style="--start: {{(1 / lit_wat) * chart_dic[3]}}; --size: {{(1 / lit_wat) * chart_dic[4]}}"> <span class="data"> {{(1 / lit_wat) * chart_dic[4]}} W </span> </td>
+          <td style="--start: {{(1 / lit_wat) * chart_dic[3]}}; --size: {{(1 / lit_wat) * chart_dic[4]}}"> <span class="data"> {{"%.1f" % chart_dic[4]}}</span> </td>
         </tr>
         <tr>
           <th scope="row">18h</th>
-          <td style="--start: {{(1 / lit_wat) * chart_dic[4]}}; --size: {{(1 / lit_wat) * chart_dic[5]}}"> <span class="data"> {{(1 / lit_wat) * chart_dic[5]}} W </span> </td>
+          <td style="--start: {{(1 / lit_wat) * chart_dic[4]}}; --size: {{(1 / lit_wat) * chart_dic[5]}}"> <span class="data"> {{"%.1f" % chart_dic[5]}}</span> </td>
         </tr>
         <tr>
           <th scope="row">17h</th>
-          <td style="--start: {{(1 / lit_wat) * chart_dic[5]}}; --size: {{(1 / lit_wat) * chart_dic[6]}}"> <span class="data"> {{(1 / lit_wat) * chart_dic[6]}} W </span> </td>
+          <td style="--start: {{(1 / lit_wat) * chart_dic[5]}}; --size: {{(1 / lit_wat) * chart_dic[6]}}"> <span class="data"> {{"%.1f" % chart_dic[6]}}</span> </td>
         </tr>
         <tr>
           <th scope="row">16h</th>
-          <td style="--start: {{(1 / lit_wat) * chart_dic[6]}}; --size: {{(1 / lit_wat) * chart_dic[7]}}"> <span class="data"> {{(1 / lit_wat) * chart_dic[7]}} W </span> </td>
+          <td style="--start: {{(1 / lit_wat) * chart_dic[6]}}; --size: {{(1 / lit_wat) * chart_dic[7]}}"> <span class="data"> {{"%.1f" % chart_dic[7]}}</span> </td>
         </tr>
         <tr>
           <th scope="row">15h</th>
-          <td style="--start: {{(1 / lit_wat) * chart_dic[7]}}; --size: {{(1 / lit_wat) * chart_dic[8]}}"> <span class="data"> {{(1 / lit_wat) * chart_dic[8]}} W </span> </td>
+          <td style="--start: {{(1 / lit_wat) * chart_dic[7]}}; --size: {{(1 / lit_wat) * chart_dic[8]}}"> <span class="data"> {{"%.1f" % chart_dic[8]}}</span> </td>
         </tr>
         <tr>
           <th scope="row">14h</th>
-          <td style="--start: {{(1 / lit_wat) * chart_dic[8]}}; --size: {{(1 / lit_wat) * chart_dic[9]}}"> <span class="data"> {{(1 / lit_wat) * chart_dic[9]}} W </span> </td>
+          <td style="--start: {{(1 / lit_wat) * chart_dic[8]}}; --size: {{(1 / lit_wat) * chart_dic[9]}}"> <span class="data"> {{"%.1f" % chart_dic[9]}}</span> </td>
         </tr>
         <tr>
           <th scope="row">13h</th>
-          <td style="--start: {{(1 / lit_wat) * chart_dic[9]}}; --size: {{(1 / lit_wat) * chart_dic[10]}}"> <span class="data"> {{(1 / lit_wat) * chart_dic[10]}} W </span> </td>
+          <td style="--start: {{(1 / lit_wat) * chart_dic[9]}}; --size: {{(1 / lit_wat) * chart_dic[10]}}"> <span class="data"> {{"%.1f" % chart_dic[10]}}</span> </td>
         </tr>
         <tr>
           <th scope="row">12h</th>
-          <td style="--start: {{(1 / lit_wat) * chart_dic[10]}}; --size: {{(1 / lit_wat) * chart_dic[11]}}"> <span class="data"> {{(1 / lit_wat) * chart_dic[11]}} W </span> </td>
+          <td style="--start: {{(1 / lit_wat) * chart_dic[10]}}; --size: {{(1 / lit_wat) * chart_dic[11]}}"> <span class="data"> {{"%.1f" % chart_dic[11]}}</span> </td>
         </tr>
         <tr>
           <th scope="row">11h</th>
-          <td style="--start: {{(1 / lit_wat) * chart_dic[11]}}; --size: {{(1 / lit_wat) * chart_dic[12]}}"> <span class="data"> {{(1 / lit_wat) * chart_dic[12]}} W </span> </td>
+          <td style="--start: {{(1 / lit_wat) * chart_dic[11]}}; --size: {{(1 / lit_wat) * chart_dic[12]}}"> <span class="data"> {{"%.1f" % chart_dic[12]}}</span> </td>
         </tr>
         <tr>
           <th scope="row">10h</th>
-          <td style="--start: {{(1 / lit_wat) * chart_dic[12]}}; --size: {{(1 / lit_wat) * chart_dic[13]}}"> <span class="data"> {{(1 / lit_wat) * chart_dic[13]}} W </span> </td>
+          <td style="--start: {{(1 / lit_wat) * chart_dic[12]}}; --size: {{(1 / lit_wat) * chart_dic[13]}}"> <span class="data"> {{"%.1f" % chart_dic[13]}}</span> </td>
         </tr>
         <tr>
           <th scope="row">9h</th>
-          <td style="--start: {{(1 / lit_wat) * chart_dic[13]}}; --size: {{(1 / lit_wat) * chart_dic[14]}}"> <span class="data"> {{(1 / lit_wat) * chart_dic[14]}} W </span> </td>
+          <td style="--start: {{(1 / lit_wat) * chart_dic[13]}}; --size: {{(1 / lit_wat) * chart_dic[14]}}"> <span class="data"> {{"%.1f" % chart_dic[14]}}</span> </td>
         </tr>
         <tr>
           <th scope="row">8h</th>
-          <td style="--start: {{(1 / lit_wat) * chart_dic[14]}}; --size: {{(1 / lit_wat) * chart_dic[15]}}"> <span class="data"> {{(1 / lit_wat) * chart_dic[15]}} W </span> </td>
+          <td style="--start: {{(1 / lit_wat) * chart_dic[14]}}; --size: {{(1 / lit_wat) * chart_dic[15]}}"> <span class="data"> {{"%.1f" % chart_dic[15]}}</span> </td>
         </tr>
         <tr>
           <th scope="row">7h</th>
-          <td style="--start: {{(1 / lit_wat) * chart_dic[15]}}; --size: {{(1 / lit_wat) * chart_dic[16]}}"> <span class="data"> {{(1 / lit_wat) * chart_dic[16]}} W </span> </td>
+          <td style="--start: {{(1 / lit_wat) * chart_dic[15]}}; --size: {{(1 / lit_wat) * chart_dic[16]}}"> <span class="data"> {{"%.1f" % chart_dic[16]}}</span> </td>
         </tr>
         <tr>
           <th scope="row">6h</th>
-          <td style="--start: {{(1 / lit_wat) * chart_dic[16]}}; --size: {{(1 / lit_wat) * chart_dic[17]}}"> <span class="data"> {{(1 / lit_wat) * chart_dic[17]}} W </span> </td>
+          <td style="--start: {{(1 / lit_wat) * chart_dic[16]}}; --size: {{(1 / lit_wat) * chart_dic[17]}}"> <span class="data"> {{"%.1f" % chart_dic[17]}}</span> </td>
         </tr>
         <tr>
           <th scope="row">5h</th>
-          <td style="--start: {{(1 / lit_wat) * chart_dic[17]}}; --size: {{(1 / lit_wat) * chart_dic[18]}}"> <span class="data"> {{(1 / lit_wat) * chart_dic[18]}} W </span> </td>
+          <td style="--start: {{(1 / lit_wat) * chart_dic[17]}}; --size: {{(1 / lit_wat) * chart_dic[18]}}"> <span class="data"> {{"%.1f" % chart_dic[18]}}</span> </td>
         </tr>
         <tr>
           <th scope="row">4h</th>
-          <td style="--start: {{(1 / lit_wat) * chart_dic[18]}}; --size: {{(1 / lit_wat) * chart_dic[19]}}"> <span class="data"> {{(1 / lit_wat) * chart_dic[19]}} W </span> </td>
+          <td style="--start: {{(1 / lit_wat) * chart_dic[18]}}; --size: {{(1 / lit_wat) * chart_dic[19]}}"> <span class="data"> {{"%.1f" % chart_dic[19]}}</span> </td>
         </tr>
         <tr>
           <th scope="row">3h</th>
-          <td style="--start: {{(1 / lit_wat) * chart_dic[19]}}; --size: {{(1 / lit_wat) * chart_dic[20]}}"> <span class="data"> {{(1 / lit_wat) * chart_dic[20]}} W </span> </td>
+          <td style="--start: {{(1 / lit_wat) * chart_dic[19]}}; --size: {{(1 / lit_wat) * chart_dic[20]}}"> <span class="data"> {{"%.1f" % chart_dic[20]}}</span> </td>
         </tr>
         <tr>
           <th scope="row">2h</th>
-          <td style="--start: {{(1 / lit_wat) * chart_dic[20]}}; --size: {{(1 / lit_wat) * chart_dic[21]}}"> <span class="data"> {{(1 / lit_wat) * chart_dic[21]}} W </span> </td>
+          <td style="--start: {{(1 / lit_wat) * chart_dic[20]}}; --size: {{(1 / lit_wat) * chart_dic[21]}}"> <span class="data"> {{"%.1f" % chart_dic[21]}}</span> </td>
         </tr>
         <tr>
           <th scope="row">1h</th>
-          <td style="--start: {{(1 / lit_wat) * chart_dic[21]}}; --size: {{(1 / lit_wat) * chart_dic[22]}}"> <span class="data"> {{(1 / lit_wat) * chart_dic[22]}} W </span> </td>
+          <td style="--start: {{(1 / lit_wat) * chart_dic[21]}}; --size: {{(1 / lit_wat) * chart_dic[22]}}"> <span class="data"> {{"%.1f" % chart_dic[22]}}</span> </td>
         </tr>
         <tr>
           <th scope="row">0h</th>
-          <td style="--start: {{(1 / lit_wat) * chart_dic[22]}}; --size: {{(1 / lit_wat) * chart_dic[23]}}"> <span class="data"> {{(1 / lit_wat) * chart_dic[23]}} W </span> </td>
+          <td style="--start: {{(1 / lit_wat) * chart_dic[22]}}; --size: {{(1 / lit_wat) * chart_dic[23]}}"> <span class="data"> {{"%.1f" % chart_dic[23]}}</span> </td>
         </tr>
 
       </tbody>
